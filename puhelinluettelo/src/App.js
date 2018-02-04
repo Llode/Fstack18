@@ -148,7 +148,7 @@ class App extends React.Component {
         })
         this.setMessage('THIS PERSON HAS BEEN REMOVED FROM EXISTENCE')
       }).catch(error => {
-        window.alert('THIS EXPERIEMENT HAS BEEN DISPOSED OF ALREADY')
+        window.alert('THIS EXPERIEMENT HAS ALREADY BEEN DISPOSED OF')
       })
 
     }
