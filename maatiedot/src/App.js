@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import countryService from './services/countries'
+import img from 'react-image'
 
 class App extends Component {
   constructor(props) {
@@ -11,10 +12,10 @@ class App extends Component {
       data: [],
       placeholder_liikaa: [{
         name: 'lista on liian pitkä. kirjoita lisää'
-      }, {}],
+      }, {name: ''}],
       placeholder_nolla: [{
         name: 'WE WENT TOO FAR'
-      }, {}]
+      }, {name: ''}]
     }
   }
   componentWillMount() {
@@ -103,7 +104,7 @@ class App extends Component {
 
     const MaaLista = ({ maa }) => {
       return (
-        <ul>{maa.name} </ul>
+        <ul>{maa.name}</ul>
       )
     }
     const MaaTiedot = ({ maa }) => {
@@ -113,6 +114,9 @@ class App extends Component {
           <h2>{maa.name} </h2>
           <ul>Populaatio {maa.population}</ul>
           <ul>Pääkaupunki {maa.capital}</ul>
+          <img
+          src={maa.flag}
+          alt="IÄ IÄ SHUB-NIGGURATH" />
         </div>
       )
     }

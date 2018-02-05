@@ -9,5 +9,8 @@ const findCountry = (name) => {
   console.log(`${baseUrl}/${name}`)
   return axios.get(`${baseUrl}/${name}`)
 }
-
-export default { getAll, findCountry}
+const getFlag = (src) => {
+  console.log('SORSA ', src)
+  return axios.get(`${src}`)
+}
+export default { getAll, findCountry, getFlag}
