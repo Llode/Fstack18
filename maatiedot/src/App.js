@@ -7,62 +7,161 @@ class App extends Component {
     super(props)
     this.state = {
       country: [],
-      haku: ''
+      haku: '',
+      data: [],
+      placeholder_liikaa: [{
+        name: 'lista on liian pitkä. kirjoita lisää'
+      }, {}],
+      placeholder_nolla: [{
+        name: 'WE WENT TOO FAR'
+      }, {}]
     }
   }
   componentWillMount() {
-
+    countryService
+      .getAll()
+      .then(response => {
+        this.setState({ data: response.data })
+      })
   }
   handleCountryChange = (event) => {
-    // console.log(event.target.value)
+    //  console.log('typed ', event.target.value)
     this.setState({ haku: event.target.value })
+  }
+
+  Maahaku = () => {
+    let search = this.maahakuLogiikka()
+    // return (this.setCountry(search))
+    // console.log('final ', this.state.country)
+    // if (this.state.country.length > 1) {
+    //   return this.state.country
+    // }
+    // console.log('eka ', search[0])
+    if (search.length > 10) {
+      return this.state.placeholder_liikaa
+
+    }
+    if (search.length < 1) {
+      return this.state.placeholder_nolla
+
+    }
+    if (search.length < 10) {
+      return search
+    }
+    return search
+  }
+
+  /*   setCountry = (search) => {
+      console.log('setting ', search)
+      return () => {
+        this.setState({
+          country: search
+        })
+      }
+      console.log(this.state.country)
+      if (search.length > 10) {
+        return () => {
+          this.setState({
+            country: this.state.placeholder_liikaa
+          })
+        }
+      }
+      if (search.length < 1) {
+        return () => {
+          this.setState({
+            country: this.state.placeholder_nolla
+          })
+        }
+  
+      }
+      if (search.length < 10) {
+        return () => {
+          this.setState({
+            country: search
+          })
+        }
+      }
+  
+    } */
+
+  countryInfo = (country) => {
+
+  }
+
+  maahakuLogiikka() {
+    let search = this.state.country;
+    if (this.state.data !== '') {
+      search = this.state.data.filter(n => n.name.toLowerCase().match(this.state.haku.toLowerCase()));
+    }
+    //console.log('hakuehto', search);
+    //this.setCountry(search)
+    return (search)
   }
 
   render() {
 
-    const Maa = (name) => {
-      if (name !== '') {
-        countryService.findCountry(name).then(response => {
-          console.log('response', response.data)
-          if (Array.isArray(response.data)) {
-            this.setState({
-              country: response.data
-            })
-          }
-        })
-        if (this.state.country === undefined) {
-          return ([])
-        } else {
-          return (this.state.country)
-        }
-      }
-    }
-    const maaLIsta = ({ maa }) => {
+
+    const MaaLista = ({ maa }) => {
       return (
-        <li>{maa.name}</li>
+        <ul>{maa.name} </ul>
       )
     }
-    return (
-      <div>
-        <form>
-          <div>
-            maa: <input value={this.state.haku}
-              onChange={this.handleCountryChange} />
-          </div>
-          <div>
-            <button type="submit">etsi</button>
-          </div>
-        </form>
+    const MaaTiedot = ({ maa }) => {
+
+      return (
         <div>
-          {Maa(this.state.haku).map(maa =>
-            <maaLIsta
-              key={maa.name}
-              maa={maa}
-            />)}
+          <h2>{maa.name} </h2>
+          <ul>Populaatio {maa.population}</ul>
+          <ul>Pääkaupunki {maa.capital}</ul>
         </div>
-        <div>poo</div>
-      </div>
-    );
+      )
+    }
+
+    console.log('maahaku ', this.Maahaku()[0].name)
+    console.log('placeholderi', this.state.placeholder_liikaa)
+    if (this.Maahaku().length !== 1) {
+      return (
+        <div>
+          <h1>Maantietoa</h1>
+          <form>
+            <div>
+              maa: <input value={this.state.haku}
+                onChange={this.handleCountryChange} />
+            </div>
+          </form>
+          <div>
+            {this.Maahaku().map(maa =>
+              <MaaLista
+                key={maa.name}
+                maa={maa}
+              />
+            )
+            }
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>Maantietoa</h1>
+          <form>
+            <div>
+              maa: <input value={this.state.haku}
+                onChange={this.handleCountryChange} />
+            </div>
+          </form>
+          <div>
+            {this.Maahaku().map(maa =>
+              <MaaTiedot
+                key={maa.name}
+                maa={maa}
+              />
+            )
+            }
+          </div>
+        </div>
+      );
+    }
   }
 }
 
