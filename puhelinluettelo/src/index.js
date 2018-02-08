@@ -5,7 +5,7 @@ import App from './App';
 import axios from 'axios'
 
 axios
-    .get('http://localhost:3001/api/persons')
+    .get('api/persons')
     .then(response => {
         const persons = response.data
         console.log(persons)

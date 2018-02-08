@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3000/db'
+const baseUrl = '/api/persons'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -16,7 +16,7 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 const removePerson = (id, rmObject) => {
-  console.log('käsittelijä poistt', rmObject)
+  console.log('käsittelijä poistaa', rmObject)
   const request = axios.delete(`${baseUrl}/${id}`, rmObject)
   return request.then(response => response.data)
 }
