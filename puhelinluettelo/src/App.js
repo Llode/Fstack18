@@ -92,7 +92,7 @@ class App extends React.Component {
   }
 
   Filtering = () => {
-    //console.log('filter', this.state.filter)
+    console.log('filter', this.state.filter)
     let result = this.state.persons
     if (this.state.filter !== '') {
       result = this.state.persons.filter(
