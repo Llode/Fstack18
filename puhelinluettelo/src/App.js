@@ -65,7 +65,7 @@ class App extends React.Component {
 
 
   PostStates(found, person) {
-    if (found !== person.name) {
+    if (found !== person.name && person.number) {
       //console.log('person', person)
       personService.create(person).then(response => {
         this.setState({
@@ -75,11 +75,19 @@ class App extends React.Component {
         })
       })
       this.setMessage('WE HAVE SUCCESSFULLY ENGINEERED A PERSON');
-    } else {
+    }
+    if (found === person.name && person.number) {
       let modified = this.state.persons.filter(n => n.name === person.name)
       modified = modified[0]
       console.log(modified)
       this.ikkunaMod(person, modified)
+    }
+    if (!person.name || !person.number) {
+      this.setMessage('NO NUMBER OR NAME')
+      this.setState({
+        newName: '',
+        newNumber: ''
+      })
     }
   }
 
@@ -142,7 +150,7 @@ class App extends React.Component {
     const nimi = tbr[0].name
     console.log(nimi)
     if (window.confirm(`Poistetaanko ${nimi} ?`)) {
-      personService.removePerson(id, tbr).then(() =>{
+      personService.removePerson(id, tbr).then(() => {
         this.setState({
           persons: remainder
         })
