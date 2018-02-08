@@ -10,7 +10,12 @@ class App extends React.Component {
       newName: '',
       newNumber: '',
       filter: '',
-      error: null
+      error: null,
+      placeholder: [{
+        name: 'please wait',
+        number: 'data loading',
+        id: 99999
+      }]
     }
   }
 
@@ -19,9 +24,8 @@ class App extends React.Component {
     personService
       .getAll()
       .then(response => {
-        this.setState({ persons: response.data });
+        this.setState({ persons: response });
       });
-
   }
 
   handlePersonChange = (event) => {
@@ -39,7 +43,7 @@ class App extends React.Component {
   addPerson = (event) => {
     event.preventDefault()
     const person = this.createPerson();
-    console.log(person)
+    console.log('uusiPersoona ', person)
     let personNames = this.state.persons
     personNames = personNames.map((ii) => ii.name)
 
@@ -69,7 +73,7 @@ class App extends React.Component {
       //console.log('person', person)
       personService.create(person).then(response => {
         this.setState({
-          persons: this.state.persons.concat(response.data),
+          persons: this.state.persons.concat(response),
           newName: '',
           newNumber: ''
         })
@@ -79,7 +83,7 @@ class App extends React.Component {
     if (found === person.name && person.number) {
       let modified = this.state.persons.filter(n => n.name === person.name)
       modified = modified[0]
-      console.log(modified)
+      console.log('modattu ', modified)
       this.ikkunaMod(person, modified)
     }
     if (!person.name || !person.number) {
@@ -92,14 +96,20 @@ class App extends React.Component {
   }
 
   Filtering = () => {
+    console.log('persons ', this.state.persons)
     console.log('filter', this.state.filter)
     let result = this.state.persons
+    console.log('filterResult', result)
     if (this.state.filter !== '') {
       result = this.state.persons.filter(
         person => person.name.toLowerCase().match(this.state.filter.toLowerCase()))
       //console.log('filter result', result)
     }
-    return (result)
+    if (result) {
+      return (result)
+    } else {
+      return (this.state.placeholder)
+    }
   }
 
 
@@ -135,7 +145,7 @@ class App extends React.Component {
         personService
           .getAll()
           .then(response2 => {
-            this.setState({ persons: response2.data });
+            this.setState({ persons: response2 });
           });
       }).catch(error => {
         window.alert('THE EXPERIMENT HAS ALREADY SUCCUMBED')
@@ -148,7 +158,7 @@ class App extends React.Component {
 
   ikkuna = (id, tbr, remainder) => {
     const nimi = tbr[0].name
-    console.log(nimi)
+    console.log('ikkuna_nimi', nimi)
     if (window.confirm(`Poistetaanko ${nimi} ?`)) {
       personService.removePerson(id, tbr).then(() => {
         this.setState({
