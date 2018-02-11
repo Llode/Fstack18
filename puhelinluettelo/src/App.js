@@ -139,8 +139,9 @@ class App extends React.Component {
   }
 
   ikkunaMod = (person, modified) => {
-    console.log(person)
-    if (window.confirm(`${person.nimi} löytyy jo luettelosta, muutetaanko numero?`)) {
+    console.log('ikkunapersoona', person)
+    console.log('ikkunanimi ', person.name)
+    if (window.confirm(`${person.name} löytyy jo luettelosta, muutetaanko numero?`)) {
       personService.update(modified.id, person).then(response => {
         personService
           .getAll()
@@ -156,7 +157,7 @@ class App extends React.Component {
     }
   }
 
-  ikkuna = (id, tbr, remainder) => {
+  ikkunaDel = (id, tbr, remainder) => {
     const nimi = tbr[0].name
     console.log('ikkuna_nimi', nimi)
     if (window.confirm(`Poistetaanko ${nimi} ?`)) {
@@ -175,7 +176,7 @@ class App extends React.Component {
     const tbr = this.state.persons.filter(n => n.id === id)
     const remainder = this.state.persons.filter(n => n.id !== id)
     return () => {
-      this.ikkuna(id, tbr, remainder)
+      this.ikkunaDel(id, tbr, remainder)
     }
   }
 
