@@ -9,12 +9,11 @@ const totalLikes = (blogs) => {
 }
 
 const favouriteBlog = (blogs) => {
-  const indexarr = blogs.map((x) => (x.likes))
-  console.log('iarr ',indexarr)
-  const index = Math.max(indexarr)
-  console.log('index ',index)
-  console.log('blogi ', blogs[index])
-  return blogs[index]
+  const max = blogs.reduce( (prev, current) => {
+    return (prev.likes > current.likes) ? prev : current
+  })
+  console.log('fave ', max)
+  return max
 }
 
 module.exports = {
