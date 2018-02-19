@@ -9,17 +9,44 @@ const totalLikes = (blogs) => {
 }
 
 const favouriteBlog = (blogs) => {
-  const max = blogs.reduce( (prev, current) => {
+  const max = blogs.reduce((prev, current) => {
     return (prev.likes > current.likes) ? prev : current
   })
   console.log('fave ', max)
   return max
 }
 
+const mostBlogs = (blogs) => {
+  const names = blogs.map(i => i.author)
+  const name = names.sort((a, b) => {
+    blogs.filter(v => v.author === a.author).length -
+      blogs.filter(v => v.author === b.author).length
+  }).pop()
+  let amount = 1
 
+  names.forEach(elem => {
+    if (elem === name) {
+      amount++
+    }
+  })
+  return {
+    author: name,
+    blogs: amount
+  }
+}
+//TEE
+const mostLikes = (blogs) => {
+
+  return {
+    author: undefined,
+    likes: undefined
+  }
+}
 
 module.exports = {
   dummy,
   totalLikes,
-  favouriteBlog
+  favouriteBlog,
+  mostBlogs,
+  mostLikes
 }
