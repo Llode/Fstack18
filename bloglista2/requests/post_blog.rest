@@ -1,9 +1,7 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Oikea blogi 2",
   "author": "Oikea blogisti",
-  "url": "ihanomablogi2.com",
-  "likes": "100"
+  "likes": 10
 }
