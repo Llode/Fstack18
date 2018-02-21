@@ -85,7 +85,7 @@ test('a valid blog can be added, with defined lieks', async () => {
   lenghtPlusOne(response, allBlogs)
   expect(titles).toContain('testiblogin titteli')
   expect(likes).toBeDefined
-  expect(titles).toBeDefined && expect(urls).toBeUndefined
+  expect(titles).toBeDefined && expect(urls).toBeDefined
 })
 
 test('a blog must have either title or url', async () => {
