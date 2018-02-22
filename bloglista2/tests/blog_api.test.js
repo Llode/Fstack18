@@ -6,7 +6,8 @@ const {
 const api = supertest(app)
 const Blog = require('../models/blog')
 
-const initBlogs = [{
+const initBlogs = [
+  {
     _id: '5a422a851b54a676234d17f7',
     title: 'React patterns',
     author: 'Michael Chan',

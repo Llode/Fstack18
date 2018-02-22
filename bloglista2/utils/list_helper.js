@@ -1,3 +1,4 @@
+const User = require('../models/user')
 const dummy = (blogs) => {
   return 1
 }
@@ -42,11 +43,16 @@ const mostLikes = (blogs) => {
     likes: undefined
   }
 }
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users
+}
 
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
   mostBlogs,
-  mostLikes
+  mostLikes,
+  usersInDb
 }
