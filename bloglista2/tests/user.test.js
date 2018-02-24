@@ -41,4 +41,40 @@ describe.only('when there is initially one user at db', async () => {
     const usernames = usersAfterOperation.map(u => u.username)
     expect(usernames).toContain(newUser.username)
   })
+
+  test('Password check works', async () => {
+
+    const usersBeforeOperation = await listHelper.usersInDb()
+    const badAPwd = {
+      username: 'bad boii',
+      name: 'Aku',
+      adult: false,
+      password: 'da'
+    }
+    await api.post('/api/users')
+      .send(badAPwd)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAfterOperation = await listHelper.usersInDb()
+    expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+  })
+  test('post fails with non-unique username', async () => {
+    const usersBeforeOperation = await listHelper.usersInDb()
+    const notNewUser = {
+      username: 'pauajuusar',
+      name: 'Die Hackermannen',
+      adult: true,
+      password: 'trololol'
+    }
+
+    await api
+      .post('/api/users')
+      .send(notNewUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAfterOperation = await listHelper.usersInDb()
+    expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+  })
 })

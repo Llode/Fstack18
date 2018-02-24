@@ -1,8 +1,9 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpdXNlciIsImlkIjoiNWE5MTkzMDEzZWRjODUxMjg4OWVmZTI2IiwiaWF0IjoxNTE5NDg5ODczfQ.6gfgwMjd4i4McEZ8qkLeIEMtK_VR-Q5vdvMrTUIsqW4
 
 {
-  "title": "perkl",
-  "author": "Oikea blogisti",
-  "likes": 10
+  "title": "perkl no tortetreatreken",
+  "author": "Oikeratertea blogaaja",
+  "likes": 1001
 }

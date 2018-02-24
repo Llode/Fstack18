@@ -37,10 +37,32 @@ const mostBlogs = (blogs) => {
 }
 //TEE
 const mostLikes = (blogs) => {
+  let key = (obj) => {
+    return obj.author
+  }
+  let dict = {}
+
+  blogs.forEach(element => {
+    dict[key(element)] = 0
+  });
+  blogs.forEach(element => {
+    dict[key(element)] += element.likes
+  });
+  console.log(dict)
+  let author = ""
+  let max = 0
+  console.log(Object.keys(dict))
+
+  for( var prop in dict) {
+    if (dict[prop] > max) {
+      max = dict[prop]
+      author = prop
+    }
+  }
 
   return {
-    author: undefined,
-    likes: undefined
+    author: author,
+    likes: max
   }
 }
 const usersInDb = async () => {

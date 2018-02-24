@@ -1,6 +1,7 @@
 (function () {
   var childProcess = require('child_process')
   var oldSpawn = childProcess.spawn
+
   function mySpawn() {
     console.log('spawn called')
     console.log(arguments)
@@ -17,9 +18,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const middleware = require('./utils/middleware')
+
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const config = require('./utils/config')
+const loginRouter = require('./controllers/login')
 
 mongoose.connect(config.mongoUrl)
   .then(() => {
@@ -34,8 +37,10 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('build'))
 app.use(middleware.logger)
+app.use(middleware.tokenExtractor)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 app.use(middleware.error)
 
 const server = http.createServer(app)
